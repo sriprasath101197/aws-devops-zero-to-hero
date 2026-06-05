@@ -29,3 +29,8 @@ artifacts:
     - '**/*'
   base-directory: ../simple-python-app
 
+artifacts:
+  files:
+    - appspec.yml
+    - start_container.sh
+    - stop_container.sh

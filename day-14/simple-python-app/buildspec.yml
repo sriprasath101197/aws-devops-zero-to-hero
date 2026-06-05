@@ -14,19 +14,25 @@ phases:
       - echo "Installing dependencies..."
       - pip install -r day-14/simple-python-app/requirements.txt
 
+  pre_build:
+    commands:
+      - echo "Logging in to Docker registry"
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+
   build:
     commands:
-      - echo "Running build..."
+      - echo "Changing directory to Python app"
       - cd day-14/simple-python-app
-      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - echo "Building Docker image"
       - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest" .
+      - echo "Pushing Docker image"
       - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest"
 
   post_build:
     commands:
-      - echo "Build completed successfully!"
+      - echo "Build completed successfully"
 
-  artifacts:
+artifacts:
   files:
     - day-14/simple-python-app/appspec.yml
     - day-14/simple-python-app/start_container.sh

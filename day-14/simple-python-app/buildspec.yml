@@ -36,5 +36,5 @@ artifacts:
   base-directory: day-14/simple-python-app
   files:
     - appspec.yml
-    - start_container.sh
-    - stop_container.sh
+    - scripts/start_container.sh
+    - scripts/stop_container.sh
